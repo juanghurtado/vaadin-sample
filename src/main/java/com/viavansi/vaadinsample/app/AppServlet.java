@@ -1,8 +1,9 @@
-package com.viavansi.vaadinsample;
+package com.viavansi.vaadinsample.app;
 
 import javax.servlet.ServletException;
 
 import com.vaadin.server.VaadinServlet;
+import com.viavansi.vaadinsample.listeners.CustomSessionInitListener;
 
 @SuppressWarnings("serial")
 public class AppServlet extends VaadinServlet {
@@ -10,6 +11,6 @@ public class AppServlet extends VaadinServlet {
     @Override
     protected final void servletInitialized() throws ServletException {
         super.servletInitialized();
-        getService().addSessionInitListener(new AppSessionInitListener());
+        getService().addSessionInitListener(new CustomSessionInitListener());
     }
 }

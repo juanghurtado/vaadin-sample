@@ -1,4 +1,4 @@
-package com.viavansi.vaadinsample;
+package com.viavansi.vaadinsample.listeners;
 
 import org.jsoup.nodes.Element;
 
@@ -10,7 +10,7 @@ import com.vaadin.server.SessionInitEvent;
 import com.vaadin.server.SessionInitListener;
 
 @SuppressWarnings("serial")
-public class AppSessionInitListener implements SessionInitListener {
+public class CustomSessionInitListener implements SessionInitListener {
 
     @Override
     public final void sessionInit(final SessionInitEvent event) throws ServiceException {
@@ -38,9 +38,7 @@ public class AppSessionInitListener implements SessionInitListener {
             }
 
             @Override
-            public void modifyBootstrapFragment(
-                    final BootstrapFragmentResponse response) {
-            }
+            public void modifyBootstrapFragment(final BootstrapFragmentResponse response) {}
         });
     }
 

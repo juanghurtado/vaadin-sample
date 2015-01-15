@@ -11,10 +11,10 @@
 	</context-param>
 	<servlet>
 		<servlet-name>AppServlet</servlet-name>
-		<servlet-class>com.viavansi.vaadinsample.AppServlet</servlet-class>
+		<servlet-class>com.viavansi.vaadinsample.app.AppServlet</servlet-class>
 		<init-param>
 			<param-name>UI</param-name>
-			<param-value>com.viavansi.vaadinsample.AppUI</param-value>
+			<param-value>com.viavansi.vaadinsample.app.AppUI</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
