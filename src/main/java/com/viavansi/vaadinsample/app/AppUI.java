@@ -6,24 +6,22 @@ import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
-import com.viavansi.vaadinsample.app.users.list.UsersListViewImpl;
+import com.viavansi.vaadinsample.app.users.add.UsersAddView;
+import com.viavansi.vaadinsample.app.users.list.UsersListView;
 
 @Theme("vaadinsample")
 @Widgetset("com.viavansi.vaadinsample.AppWidgetSet")
 @Title("Vaadin Sample")
 @SuppressWarnings("serial")
 public final class AppUI extends UI {
-	
-	private UsersListViewImpl usersListView;
-	Navigator navigator;
 
     @Override
     protected void init(final VaadinRequest request) {
-        navigator = new Navigator(this, this);
+    	Navigator navigator = new Navigator(this, this);
         
-        usersListView = new UsersListViewImpl();
-        
-        navigator.navigateTo(usersListView.VIEW_NAME);
+        navigator.addView("", UsersListView.class);
+        navigator.addView(UsersListView.VIEW_NAME, UsersListView.class);
+        navigator.addView(UsersAddView.VIEW_NAME, UsersAddView.class);
     }
     
 }

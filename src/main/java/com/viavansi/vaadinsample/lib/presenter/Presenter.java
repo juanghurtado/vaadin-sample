@@ -1,8 +1,10 @@
 package com.viavansi.vaadinsample.lib.presenter;
 
+import com.vaadin.navigator.Navigator;
+import com.viavansi.vaadinsample.app.AppUI;
 import com.viavansi.vaadinsample.lib.view.View;
 
-public class Presenter <T extends View> {
+public abstract class Presenter <T extends View> {
 	
 	private T view;
 
@@ -14,18 +16,16 @@ public class Presenter <T extends View> {
 		setView(view);
 	}
 	
-	/**
-	 * Get the {@link View} that is associated to this presenter
-	 */
 	public T getView() {
 		return view;
 	}
 	
-	/**
-	 * Set the view of this presenter
-	 */
 	public void setView(T view) {
 		this.view = view;
+	}
+	
+	public Navigator getNavigator() {
+		return AppUI.getCurrent().getNavigator();
 	}
 
 }
