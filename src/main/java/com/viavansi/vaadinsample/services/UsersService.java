@@ -1,11 +1,13 @@
 package com.viavansi.vaadinsample.services;
 
+import com.vaadin.data.Container.Filter;
+import com.vaadin.data.Item;
 import com.vaadin.data.util.IndexedContainer;
 
 public class UsersService {
 
 	private static UsersService INSTANCE;
-	private IndexedContainer ic = new IndexedContainer();
+	private IndexedContainer container = new IndexedContainer();
 	
 	private static final String FNAME = "First Name";
 	private static final String LNAME = "Last Name";
@@ -14,7 +16,7 @@ public class UsersService {
 	
 	private UsersService(){ 
 		for (String p : fieldNames) {
-			ic.addContainerProperty(p, String.class, "");
+			container.addContainerProperty(p, String.class, "");
 		}
 
 		String[] fnames = { "Peter", "Alice", "Joshua", "Mike", "Olivia",
@@ -25,11 +27,12 @@ public class UsersService {
 				"Barks", "Ross", "Schneider", "Tate" };
 		String[] companies = { "Apple", "Viavansi", "Carrefour", "Barclays", "Junta de Andalucía",
 				"Endesa", "GitHub" };
-		for (int i = 0; i < 1000; i++) {
-			Object id = ic.addItem();
-			ic.getContainerProperty(id, FNAME).setValue(fnames[(int) (fnames.length * Math.random())]);
-			ic.getContainerProperty(id, LNAME).setValue(lnames[(int) (lnames.length * Math.random())]);
-			ic.getContainerProperty(id, COMPANY).setValue(companies[(int) (companies.length * Math.random())]);
+		
+		for (int i = 0; i < 5; i++) {
+			Object id = container.addItem();
+			container.getContainerProperty(id, FNAME).setValue(fnames[(int) (fnames.length * Math.random())]);
+			container.getContainerProperty(id, LNAME).setValue(lnames[(int) (lnames.length * Math.random())]);
+			container.getContainerProperty(id, COMPANY).setValue(companies[(int) (companies.length * Math.random())]);
 		}
 	}
 	
@@ -42,7 +45,48 @@ public class UsersService {
 	}
 	
 	public IndexedContainer getUsers() {
-		return ic;
+		return container;
+	}
+	
+	public void removeUser(Integer id) {
+		container.removeItem(id);
+	}
+	
+	public void addUser(String name, String last_name, String company) {
+		Object id = container.addItem();
+		
+		container.getContainerProperty(id, FNAME).setValue(name);
+		container.getContainerProperty(id, LNAME).setValue(last_name);
+		container.getContainerProperty(id, COMPANY).setValue(company);
+	}
+	
+	public void filter(String text) {
+		container.removeAllContainerFilters();
+		container.addContainerFilter(new UsersFilter(text));
+	}
+	
+	public void clearFilter() {
+		container.removeAllContainerFilters();
+	}
+	
+	private class UsersFilter implements Filter {
+		private static final long serialVersionUID = -2957052129604749520L;
+		private String needle;
+
+		public UsersFilter(String needle) {
+			this.needle = needle.toLowerCase();
+		}
+
+		public boolean passesFilter(Object itemId, Item item) {
+			String haystack = ("" + item.getItemProperty(FNAME).getValue()
+					+ item.getItemProperty(LNAME).getValue() + item
+					.getItemProperty(COMPANY).getValue()).toLowerCase();
+			return haystack.contains(needle);
+		}
+
+		public boolean appliesToProperty(Object id) {
+			return true;
+		}
 	}
 	
 }

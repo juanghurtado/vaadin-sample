@@ -3,7 +3,7 @@ package com.viavansi.vaadinsample.app;
 import javax.servlet.ServletException;
 
 import com.vaadin.server.VaadinServlet;
-import com.viavansi.vaadinsample.listeners.CustomSessionInitListener;
+import com.viavansi.vaadinsample.lib.listener.CustomSessionInitListener;
 
 @SuppressWarnings("serial")
 public class AppServlet extends VaadinServlet {

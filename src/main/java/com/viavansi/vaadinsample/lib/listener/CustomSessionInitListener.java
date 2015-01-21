@@ -1,4 +1,4 @@
-package com.viavansi.vaadinsample.listeners;
+package com.viavansi.vaadinsample.lib.listener;
 
 import org.jsoup.nodes.Element;
 
