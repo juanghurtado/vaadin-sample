@@ -50,27 +50,44 @@ public class UsersAddView extends GenericView {
 	
 	private FormLayout getForm() {
 		FormLayout layout = new FormLayout();
-		
-		TextField name = (TextField) fieldGroup.buildAndBind("Name", "name");
-		TextField lastName = (TextField) fieldGroup.buildAndBind("Last Name", "lastName");
-		TextField company = (TextField) fieldGroup.buildAndBind("Company", "company");
-		
-		name.setNullRepresentation("");
-		name.setSizeFull();
-		name.setRequired(true);
-		
-		lastName.setNullRepresentation("");
-		lastName.setSizeFull();
-		lastName.setRequired(true);
-		
-		company.setNullRepresentation("");
-		company.setSizeFull();
+		TextField name = getNameField();
+		TextField lastName = getLastNameField();
+		TextField company = getCompanyField();
 		
 		layout.addComponent(name);
 		layout.addComponent(lastName);
 		layout.addComponent(company);
 		
 		return layout;
+	}
+
+	private TextField getCompanyField() {
+		TextField company = fieldGroup.buildAndBind("Company", "company", TextField.class);
+		
+		company.setNullRepresentation("");
+		company.setSizeFull();
+		
+		return company;
+	}
+
+	private TextField getLastNameField() {
+		TextField lastName = fieldGroup.buildAndBind("Last Name", "lastName", TextField.class);
+		
+		lastName.setNullRepresentation("");
+		lastName.setSizeFull();
+		lastName.setRequired(true);
+		
+		return lastName;
+	}
+
+	private TextField getNameField() {
+		TextField name = fieldGroup.buildAndBind("Name", "name", TextField.class);
+		
+		name.setNullRepresentation("");
+		name.setSizeFull();
+		name.setRequired(true);
+		
+		return name;
 	}
 	
 	private HorizontalLayout getHeader() {
