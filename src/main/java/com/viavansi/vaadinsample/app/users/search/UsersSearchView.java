@@ -14,27 +14,15 @@ public class UsersSearchView extends GenericView {
 
 	private static final long serialVersionUID = 3861531882521294988L;
 	private final UsersSearchPresenter presenter;
+	private TextField text;
 
 	public UsersSearchView(BeanContainer<String, User> usersList) {
-		presenter = new UsersSearchPresenter(this);
-		presenter.setDataSource(usersList);
+		presenter = new UsersSearchPresenter(this, usersList);
 		
 		HorizontalLayout layout = new HorizontalLayout();
 		
-		final TextField text = getTextField();
+		text = getTextField();
 		Button button = getButton();
-		
-		button.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = -1152008427884812260L;
-
-			public void buttonClick(ClickEvent event) {
-				if (!text.getValue().isEmpty()) {
-					presenter.search(text.getValue());
-				} else {
-					presenter.clearSearch();
-				}
-		    }
-		});
 		
 		layout.setSpacing(true);
 		
@@ -44,7 +32,6 @@ public class UsersSearchView extends GenericView {
 		this.setSizeUndefined();
 		this.addComponent(layout);
 	}
-	
 
 	@Override
 	public void enter(ViewChangeEvent event) {
@@ -63,6 +50,18 @@ public class UsersSearchView extends GenericView {
 		Button button = new Button("Search");
 		
 		button.setClickShortcut(KeyCode.ENTER);
+		
+		button.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = -1152008427884812260L;
+
+			public void buttonClick(ClickEvent event) {
+				if (!text.getValue().isEmpty()) {
+					presenter.search(text.getValue());
+				} else {
+					presenter.clearSearch();
+				}
+		    }
+		});		
 		
 		return button;
 	}
