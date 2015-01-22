@@ -2,7 +2,7 @@ package com.viavansi.vaadinsample.app.users.list;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-import com.vaadin.data.util.IndexedContainer;
+import com.vaadin.data.util.BeanContainer;
 import com.vaadin.event.Action;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -18,6 +18,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import com.viavansi.vaadinsample.app.AppUI;
 import com.viavansi.vaadinsample.app.users.search.UsersSearchView;
 import com.viavansi.vaadinsample.lib.view.GenericView;
+import com.viavansi.vaadinsample.models.User;
 
 public class UsersListView extends GenericView {
 
@@ -91,18 +92,20 @@ public class UsersListView extends GenericView {
 	}
 	
 	private GenericView getSearch() {
-		return new UsersSearchView();
+		return new UsersSearchView(presenter.getUsers());
 	}
 
 	private Table getUsersListTable() {
-		IndexedContainer users = presenter.getUsers();
+		BeanContainer<String, User> users = presenter.getUsers();
 		Table usersList = new Table();
 		
 		usersList.setContainerDataSource(users);
-		usersList.setVisibleColumns(new String[] { "First Name", "Last Name", "Company" });
+		usersList.setVisibleColumns(new Object[] { "name", "lastName", "company" });
+		usersList.setColumnHeader("name", "Name");
+		usersList.setColumnHeader("lastName", "Last Name");
+		usersList.setColumnHeader("company", "Company");
 		usersList.setSelectable(true);
 		usersList.setSizeFull();
-		usersList.setPageLength(2);
 		
 		usersList.addActionHandler(new Action.Handler() {
 			private static final long serialVersionUID = 9188290972190096595L;
@@ -120,7 +123,7 @@ public class UsersListView extends GenericView {
                 if (remove == action) {
                 	ConfirmDialog.show(AppUI.getCurrent(), "Are you sure?",
     			        new ConfirmDialog.Listener() {
-							private static final long serialVersionUID = 1L;
+							private static final long serialVersionUID = 8888290972190096595L;
 
 							public void onClose(ConfirmDialog dialog) {
     			                if (dialog.isConfirmed()) {

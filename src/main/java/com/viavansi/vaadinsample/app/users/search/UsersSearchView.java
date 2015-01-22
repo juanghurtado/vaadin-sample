@@ -1,5 +1,6 @@
 package com.viavansi.vaadinsample.app.users.search;
 
+import com.vaadin.data.util.BeanContainer;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Button;
@@ -7,14 +8,16 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Button.ClickEvent;
 import com.viavansi.vaadinsample.lib.view.GenericView;
+import com.viavansi.vaadinsample.models.User;
 
 public class UsersSearchView extends GenericView {
 
 	private static final long serialVersionUID = 3861531882521294988L;
 	private final UsersSearchPresenter presenter;
 
-	public UsersSearchView() {
+	public UsersSearchView(BeanContainer<String, User> usersList) {
 		presenter = new UsersSearchPresenter(this);
+		presenter.setDataSource(usersList);
 		
 		HorizontalLayout layout = new HorizontalLayout();
 		
