@@ -44,6 +44,10 @@ public class UsersService {
 		return users;
 	}
 	
+	public User getUser(Integer id) {
+		return users.get(id);
+	}
+	
 	public void removeUser(User user) {
 		users.remove(user);
 		
