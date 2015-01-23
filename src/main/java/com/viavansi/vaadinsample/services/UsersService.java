@@ -54,7 +54,7 @@ public class UsersService {
 	}
 	
 	public void addUser(User user) {
-		user.setId(users.size() + 1);
+		user.setId(users.size());
 		users.add(user);
 	}
 	
