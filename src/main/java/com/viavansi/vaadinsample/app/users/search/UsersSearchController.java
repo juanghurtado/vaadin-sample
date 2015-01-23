@@ -1,19 +1,19 @@
 package com.viavansi.vaadinsample.app.users.search;
 
 import com.vaadin.data.util.BeanContainer;
+import com.viavansi.vaadinsample.lib.controller.GenericController;
 import com.viavansi.vaadinsample.lib.filters.UsersFilter;
-import com.viavansi.vaadinsample.lib.presenter.Presenter;
 import com.viavansi.vaadinsample.models.User;
 
-public class UsersSearchPresenter extends Presenter<UsersSearchView> {
+public class UsersSearchController extends GenericController<UsersSearchView> {
 	
 	public BeanContainer<String, User> dataSource;
 
-	public UsersSearchPresenter(UsersSearchView view) {
+	public UsersSearchController(UsersSearchView view) {
 		super(view);
 	}
 	
-	public UsersSearchPresenter(UsersSearchView view, BeanContainer<String, User> source) {
+	public UsersSearchController(UsersSearchView view, BeanContainer<String, User> source) {
 		super(view);
 		
 		dataSource = source;

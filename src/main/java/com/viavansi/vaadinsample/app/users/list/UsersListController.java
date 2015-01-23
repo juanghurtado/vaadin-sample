@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 import com.vaadin.data.util.BeanContainer;
 import com.viavansi.vaadinsample.app.users.add.UsersAddView;
-import com.viavansi.vaadinsample.lib.presenter.Presenter;
+import com.viavansi.vaadinsample.lib.controller.GenericController;
 import com.viavansi.vaadinsample.models.User;
 import com.viavansi.vaadinsample.services.UsersService;
 
-public class UsersListPresenter extends Presenter<UsersListView> {
+public class UsersListController extends GenericController<UsersListView> {
 	
 	public BeanContainer<String, User> container;
 
-	public UsersListPresenter(UsersListView view) {
+	public UsersListController(UsersListView view) {
 		super(view);
 		
 		ArrayList<User> users = new ArrayList<User>(UsersService.getInstance().getUsers());
@@ -30,6 +30,10 @@ public class UsersListPresenter extends Presenter<UsersListView> {
 		
 		container.removeItem(id);
 		UsersService.getInstance().removeUser(user);
+	}
+	
+	public User getUser(Integer id) {
+		return UsersService.getInstance().getUser(id);
 	}
 	
 	public void openUsersAddView() {

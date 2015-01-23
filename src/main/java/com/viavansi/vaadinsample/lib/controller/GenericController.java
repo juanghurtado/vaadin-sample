@@ -1,18 +1,19 @@
-package com.viavansi.vaadinsample.lib.presenter;
+package com.viavansi.vaadinsample.lib.controller;
 
 import com.vaadin.navigator.Navigator;
+import com.vaadin.ui.Window;
 import com.viavansi.vaadinsample.app.AppUI;
 import com.viavansi.vaadinsample.lib.view.View;
 
-public abstract class Presenter <T extends View> {
+public abstract class GenericController <T extends View> {
 	
 	private T view;
 
-	public Presenter() {
+	public GenericController() {
 		
 	}
 	
-	public Presenter (T view) {
+	public GenericController (T view) {
 		setView(view);
 	}
 	
@@ -26,6 +27,10 @@ public abstract class Presenter <T extends View> {
 	
 	public Navigator getNavigator() {
 		return AppUI.getCurrent().getNavigator();
+	}
+	
+	public void showWindow(Window window) {
+		AppUI.getCurrent().addWindow(window);
 	}
 
 }

@@ -6,7 +6,6 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.UserError;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.FormLayout;
@@ -21,13 +20,13 @@ import com.viavansi.vaadinsample.models.User;
 public class UsersAddView extends GenericView {
 	
 	private static final long serialVersionUID = 8997350938236800619L;
-	private final UsersAddPresenter presenter;
+	private final UsersAddController controller;
 	public static final String VIEW_NAME = "users/add";
 	private BeanFieldGroup<User> fieldGroup;
 	private User user;
 	
 	public UsersAddView() {
-		presenter = new UsersAddPresenter(this);
+		controller = new UsersAddController(this);
 		user = new User();
 		fieldGroup = new BeanFieldGroup<User>(User.class);
 		fieldGroup.setItemDataSource(new BeanItem<User>(user));
@@ -114,7 +113,6 @@ public class UsersAddView extends GenericView {
 		Button save = getSaveButton();
 		Button cancel = getCancelButton();
 		
-		layout.setMargin(new MarginInfo(0001));
 		layout.setSpacing(true);
 		
 		layout.addComponent(cancel);
@@ -130,9 +128,10 @@ public class UsersAddView extends GenericView {
 			private static final long serialVersionUID = -1152008427884812260L;
 
 			public void buttonClick(ClickEvent event) {
-				presenter.openUsersListView();
+				controller.openUsersListView();
 		    }
 		});
+		
 		return cancel;
 	}
 
@@ -149,7 +148,7 @@ public class UsersAddView extends GenericView {
 				
 				try {
 		            fieldGroup.commit();
-		            presenter.saveUser(user);
+		            controller.saveUser(user);
 		            Notification.show("User added!");
 		        } catch (CommitException e) {
 		        	

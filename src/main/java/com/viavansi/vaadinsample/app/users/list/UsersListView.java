@@ -14,20 +14,23 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 import com.viavansi.vaadinsample.app.AppUI;
 import com.viavansi.vaadinsample.app.users.search.UsersSearchView;
+import com.viavansi.vaadinsample.app.users.show.UsersShowView;
 import com.viavansi.vaadinsample.lib.view.GenericView;
 import com.viavansi.vaadinsample.models.User;
+import com.viavansi.vaadinsample.services.UsersService;
 
 public class UsersListView extends GenericView {
 
 	private static final long serialVersionUID = 3997350938236800619L;
-	private final UsersListPresenter presenter;
+	private final UsersListController controller;
 	public static final String VIEW_NAME = "users";
 	
 	public UsersListView() {
-		presenter = new UsersListPresenter(this);
+		controller = new UsersListController(this);
 		
 		this.setSizeFull();
 		this.setMargin(true);
@@ -60,7 +63,7 @@ public class UsersListView extends GenericView {
 			private static final long serialVersionUID = -1152008427884812260L;
 
 			public void buttonClick(ClickEvent event) {
-				presenter.openUsersAddView();
+				controller.openUsersAddView();
 		    }
 		});
 		
@@ -92,11 +95,11 @@ public class UsersListView extends GenericView {
 	}
 	
 	private GenericView getSearch() {
-		return new UsersSearchView(presenter.getUsers());
+		return new UsersSearchView(controller.getUsers());
 	}
 
 	private Table getUsersListTable() {
-		BeanContainer<String, User> users = presenter.getUsers();
+		BeanContainer<String, User> users = controller.getUsers();
 		Table usersList = new Table();
 		
 		usersList.setContainerDataSource(users);
@@ -110,12 +113,14 @@ public class UsersListView extends GenericView {
 		usersList.addActionHandler(new Action.Handler() {
 			private static final long serialVersionUID = 9188290972190096595L;
 			private final Action remove = new Action("Remove");
+			private final Action view = new Action("View");
 			
             @Override
             public Action[] getActions(final Object target, final Object sender) {
             	remove.setIcon(FontAwesome.TIMES);
+            	view.setIcon(FontAwesome.SEARCH);
             	
-            	return new Action[] { remove };
+            	return new Action[] { view, remove };
             }
  
             @Override
@@ -127,10 +132,21 @@ public class UsersListView extends GenericView {
 
 							public void onClose(ConfirmDialog dialog) {
     			                if (dialog.isConfirmed()) {
-    			                	presenter.removeUser((Integer) target);
+    			                	controller.removeUser((Integer) target);
     			                }
     			            }
     			        });
+                }
+                
+                if (view == action) {
+                	Window window = new Window("User information");
+                	User user = controller.getUser((Integer) target);
+                	
+                	window.center();
+                	window.setWidth(300.0f, Unit.PIXELS);
+                	
+                	window.setContent(new UsersShowView(user));
+                	controller.showWindow(window);
                 }
             }
  

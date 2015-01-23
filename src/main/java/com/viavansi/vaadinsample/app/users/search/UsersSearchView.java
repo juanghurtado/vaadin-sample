@@ -13,11 +13,11 @@ import com.viavansi.vaadinsample.models.User;
 public class UsersSearchView extends GenericView {
 
 	private static final long serialVersionUID = 3861531882521294988L;
-	private final UsersSearchPresenter presenter;
+	private final UsersSearchController controller;
 	private TextField text;
 
 	public UsersSearchView(BeanContainer<String, User> usersList) {
-		presenter = new UsersSearchPresenter(this, usersList);
+		controller = new UsersSearchController(this, usersList);
 		
 		HorizontalLayout layout = new HorizontalLayout();
 		
@@ -56,9 +56,9 @@ public class UsersSearchView extends GenericView {
 
 			public void buttonClick(ClickEvent event) {
 				if (!text.getValue().isEmpty()) {
-					presenter.search(text.getValue());
+					controller.search(text.getValue());
 				} else {
-					presenter.clearSearch();
+					controller.clearSearch();
 				}
 		    }
 		});		
